@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #08040f;
+  --color-ink-soft: #0c0716;
+  --color-panel: #110b1d;
+  --color-panel-soft: #170f27;
+  --color-muted: #a39db6;
+  --color-accent: #7c3aed;
+  --color-accent-soft: #a855f7;
+  --color-accent-blue: #4f46e5;
+
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", "Poppins", ui-sans-serif, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: #f5f3ff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #7c3aed;
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #08040f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b2a55;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7c3aed;
+}
+
+@layer components {
+  .section {
+    @apply relative py-20 lg:py-28;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-purple-300;
+  }
+
+  .eyebrow::before {
+    content: "";
+    @apply h-1.5 w-1.5 rounded-full bg-purple-400 shadow-[0_0_10px_2px_rgba(168,85,247,0.85)];
+  }
+
+  .glass-card {
+    @apply relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03];
+  }
+
+  .btn-solid {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_10px_35px_-12px_rgba(124,58,237,0.9)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_45px_-12px_rgba(124,58,237,0.95)] active:translate-y-0;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white/90 transition duration-300 hover:border-purple-400/60 hover:bg-white/[0.07] hover:text-white;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-white via-purple-100 to-purple-300 bg-clip-text text-transparent;
+  }
+}
+
+/* soft glows */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+/* marquee */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-track--reverse {
+  animation-direction: reverse;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.animate-float {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+.nav-link {
+  @apply relative text-sm text-white/60 transition hover:text-white;
+}
+
+.nav-link::after {
+  content: "";
+  @apply absolute -bottom-1.5 left-0 h-px w-0 bg-gradient-to-r from-purple-400 to-indigo-400 transition-all duration-300;
+}
+
+.nav-link:hover::after,
+.nav-link[data-active="true"]::after {
+  @apply w-full;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .marquee-track,
+  .animate-float {
+    animation: none;
+  }
+}
